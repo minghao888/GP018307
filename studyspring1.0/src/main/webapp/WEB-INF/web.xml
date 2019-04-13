@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	<display-name>Gupao Web Application</display-name>
+
+
+	<servlet>
+		<!-- 核心控制器的配置DispatchServlet -->
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>com.gupaoedu.mvcframework.v3.servlet.MHDispacherServlet</servlet-class>
+		<init-param>
+			<!-- 名称固定,springmvc指定的名称就是：contextConfigLocation -->
+			<param-name>contextConfigLocation</param-name>
+			<!-- 获取 SpringMVC的配置文件的名称-->
+			<param-value>application.properties</param-value>
+		</init-param>
+		<!-- 项目启动，自动加载 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- 请求拦截，进入上面springmvc 下面的Servlet   名称一样，就会进入对应的servlet中-->
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+
+
+
+</web-app>
+

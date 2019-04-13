@@ -1,0 +1,33 @@
+
+
+JDK的观察者模式：
+    被观察者：
+        JDK提供的一种观察者的实现方式，被观察者（一对多中的一）
+        1.继承Observable 类 将当前类定义为被观察者
+        2.被观察者定义成一个单例模式，因为只有一个被观察者
+        3.编写发送消息类，执行 setChanged(); notifyObservers(Object obj); 两个方法
+                setChanged(); ：允许发送消息true;
+                notifyObservers(Object obj);：遍历发送addObserver(实体类) 方法，发送到观察者的Observer接口的update方法中
+    观察者：
+        观察者  （一对多中的多）
+        1.观察者必须实现  implements Observer
+        2.实现update方法 update(Observable o, Object arg)
+            Observable o  ：被观察者对象 例：GPer gper = (GPer)o;
+            Object arg ：被观察者传给观察者的参数 例：Question question = (Question)arg;
+
+guava实现观察者模式：
+    <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>20.0</version>
+    </dependency>
+
+    1.创建一个类作为“观察者”（普通类即可），编写接收信息的方法（普通方法即可，有参无参都可以），加上注解@Subscribe
+    2.创建消息总线                  EventBus eventBus = new EventBus();
+    3.创建观察者对象                GuavaObserver guavaObserver = new GuavaObserver();
+    4.如过方法有参数，就准备参数
+    5.将“观察者”对象注册到             eventBus.register(观察对象);    可以注册多个对象
+    6.发送消息，根据方法决定是否传参  eventBus.post(参数类型);
+    注意：eventBus.post(); 只会根据当前注册的所有“观察者” 里面加入@Subscribe方法的参数类型自动传参给对应方法，
+    如果有多个方法，同时有@Subscribe注解，方法名不同，参数类型相同，那么也会被同时调用（主要注册了对象，所有对象中存在相同的方法参数+@Subscribe注解）
+

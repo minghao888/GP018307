@@ -1,0 +1,13 @@
+
+
+静态代理的原理:
+        静态代理，是使用自己同一级别的另一个类/对象进行代理 前置和后置增强
+        例：OrderService的代理类，就是和OrderService一同实现IOrderService接口的OrderServiceStaticProxy类，
+        对OrderService类进行增强
+
+    代理类和目标类必须实现同一个接口，方便方法的统一管理，普通类和代理类都有一个insert()，再代理类中创建普通类的对象即可代理,
+    可以返回同一个接口的父类，父类直接调用接口就行了
+
+注意：
+    所有的组合对象都是可以认为是一种静态代理
+    例：Service类对Dao类来说就是一个静态代理 （dao是service中的一个属性，某个方法回调用dao.xxx()）

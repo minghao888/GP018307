@@ -1,0 +1,39 @@
+
+
+
+JDK的动态代理：
+    3.目标类必须实现一个接口，并且把需要调用（增强）的方法写到接口里面
+    1.目标类必须实现一个接口,JDK进行动态代理的时候，会重新扫描接口中的方法，并动态生成接口中的方法到jdk自己创建的代理类中，
+     否则是找不到调用的
+    2.JDK的代理类必须实现 InvocationHandler这个jdk的代理接口，否则无法实现动态代理
+
+
+CGlib动态代理：
+    1.CGlib动态代理需要引入maven包：
+                <dependency>
+                    <groupId>cglib</groupId>
+                    <artifactId>cglib-nodep</artifactId>
+                    <version>2.2</version>
+                </dependency>
+
+    2.对目标类（需要增强的对象）没有任何要求，不需要继承或实现抽象类或接口
+    3.CGlib是自动生成代码，继承目标类，所以再代理类中需要invokeSupper（调用父级）的方法
+
+
+CGlib动态代理 和 JDK的动态代理 的区别：
+    1.JDK动态代理是实现了被代理对象的接口，CGLib是继承了被代理对象。
+    2.JDK和CGLib都是在运行期生成字节码，JDK是直接写Class字节码，CGLib使用ASM框架写Class字节码，
+Cglib代理实现更复杂，生成代理类比JDK效率低。
+    3.JDK调用代理方法，是通过反射机制调用，CGLib是通过FastClass机制直接调用方法，CGLib执行效率更高。
+
+    //JDK是采用读取接口的信息
+    //CGLib覆盖父类方法
+    //目的：都是生成一个新的类，去实现增强代码逻辑的功能
+
+    //JDK Proxy 对于用户而言，必须要有一个接口实现，目标类相对来说复杂
+    //CGLib 可以代理任意一个普通的类，没有任何要求
+
+    //CGLib 生成代理逻辑更复杂，效率,调用效率更高，生成一个包含了所有的逻辑的FastClass，不再需要反射调用
+    //JDK Proxy生成代理的逻辑简单，执行效率相对要低，每次都要反射动态调用
+
+    //CGLib 有个坑，CGLib不能代理final的方法
